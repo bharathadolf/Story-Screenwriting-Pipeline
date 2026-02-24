@@ -1,0 +1,16 @@
+{
+    "scene_number": 14,
+    "location": "A NEON-LIT ALLEYWAY",
+    "time": "NIGHT",
+    "characters": ["DETECTIVE REX", "HOLOGRAPHIC INFORMANT"],
+    "action_lines": [
+        "Rain slicks the pavement. Neon signs reflect in the puddles.",
+        "Detective Rex, trench coat collar turned up, waits impatiently.",
+        "A flicker of blue light. The Holographic Informant materializes."
+    ],
+    "dialogue": [
+        {"character": "DETECTIVE REX", "text": "You're late. Do you have the data or not?"},
+        {"character": "HOLOGRAPHIC INFORMANT", "parenthetical": "glitching slightly", "text": "Patience, Rex. The firewall was... thicker than anticipated."}
+    ],
+    "objective": "Rex gets the location of the suspect's hideout."
+}
