@@ -1,9 +1,6 @@
 import json
 import os
 import argparse
-import docx
-from docx.shared import Cm, Pt
-from docx.enum.text import WD_ALIGN_PARAGRAPH
 
 # ANSI Color Codes
 class Colors:
@@ -15,80 +12,11 @@ class Colors:
     ACTION = '\033[96m'      # Cyan
     ENDC = '\033[0m'         # Reset color
 
-def setup_document():
-    doc = docx.Document()
-    
-    # 1. Page Setup (A4)
-    # Width: 21.0 cm, Height: 29.7 cm
-    section = doc.sections[0]
-    section.page_width = Cm(21.0)
-    section.page_height = Cm(29.7)
-    
-    # 2. Margins
-    # Top: 2.5 cm, Bottom: 2.5 cm, Left: 3.8 cm, Right: 2.5 cm
-    section.top_margin = Cm(2.5)
-    section.bottom_margin = Cm(2.5)
-    section.left_margin = Cm(3.8)
-    section.right_margin = Cm(2.5)
-    
-    # 3. Base Font Settings
-    style = doc.styles['Normal']
-    font = style.font
-    font.name = 'Courier'
-    font.size = Pt(12)
-    # Single line spacing, no spacing after
-    style.paragraph_format.space_after = Pt(0)
-    style.paragraph_format.line_spacing = 1.0
-
-    # 4. Element Formal Dimensions
-    
-    # Scene Heading - 0cm, ALL CAPS
-    style_scene = doc.styles.add_style('Scene Heading', docx.enum.style.WD_STYLE_TYPE.PARAGRAPH)
-    style_scene.base_style = doc.styles['Normal']
-    style_scene.paragraph_format.left_indent = Cm(0)
-    style_scene.font.all_caps = True
-    style_scene.paragraph_format.space_before = Pt(12) # spacing before the scene heading
-
-    # Action - 0cm
-    style_action = doc.styles.add_style('Action', docx.enum.style.WD_STYLE_TYPE.PARAGRAPH)
-    style_action.base_style = doc.styles['Normal']
-    style_action.paragraph_format.left_indent = Cm(0)
-    style_action.paragraph_format.space_before = Pt(12)
-
-    # Character - 6.3cm left
-    style_char = doc.styles.add_style('Character', docx.enum.style.WD_STYLE_TYPE.PARAGRAPH)
-    style_char.base_style = doc.styles['Normal']
-    style_char.paragraph_format.left_indent = Cm(6.3)
-    style_char.font.all_caps = True
-    style_char.paragraph_format.space_before = Pt(12)
-    style_char.paragraph_format.keep_with_next = True
-
-    # Dialogue - 4.4cm left, 3.8cm right
-    style_dialogue = doc.styles.add_style('Dialogue', docx.enum.style.WD_STYLE_TYPE.PARAGRAPH)
-    style_dialogue.base_style = doc.styles['Normal']
-    style_dialogue.paragraph_format.left_indent = Cm(4.4)
-    style_dialogue.paragraph_format.right_indent = Cm(3.8)
-
-    # Parenthetical - 5.4cm left, 4.6cm right
-    style_paren = doc.styles.add_style('Parenthetical', docx.enum.style.WD_STYLE_TYPE.PARAGRAPH)
-    style_paren.base_style = doc.styles['Normal']
-    style_paren.paragraph_format.left_indent = Cm(5.4)
-    style_paren.paragraph_format.right_indent = Cm(4.6)
-    style_paren.paragraph_format.keep_with_next = True
-
-    # Transition - Right aligned
-    style_trans = doc.styles.add_style('Transition', docx.enum.style.WD_STYLE_TYPE.PARAGRAPH)
-    style_trans.base_style = doc.styles['Normal']
-    style_trans.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-    style_trans.font.all_caps = True
-    style_trans.paragraph_format.space_before = Pt(12)
-
-    return doc
-
 def generate_script_from_scene(scene_file_path, output_dir="."):
     """
     Simulates the 'Drafting Department' agentic workflow.
-    Takes a structured scene data packet and renders it into a docx script format.
+    Takes a structured scene data packet and renders it into a perfectly calibrated HTML script format
+    specifically optimized for "Save As PDF" / Print to US Letter margins.
     """
     print(f"Loading scene data from {scene_file_path}...")
     with open(scene_file_path, 'r') as f:
@@ -102,12 +30,117 @@ def generate_script_from_scene(scene_file_path, output_dir="."):
     terminal_content = f"{Colors.HEADER}SCENE START{Colors.ENDC}\n\n"
     terminal_content += f"{Colors.SCENE_HEADING}EXT/INT. {location} - {time}{Colors.ENDC}\n\n"
 
-    doc = setup_document()
-    doc.add_paragraph(f"EXT/INT. {location} - {time}", style='Scene Heading')
+    # Perfect Print Calibration Settings - US Letter
+    html_content = [
+        "<!DOCTYPE html>",
+        "<html>",
+        "<head>",
+        "<meta charset=\"utf-8\">",
+        f"<title>Scene {scene_number}</title>",
+        "<style>",
+        "    /* Base Reset */",
+        "    * { box-sizing: border-box; margin: 0; padding: 0; }",
+        "",
+        "    /* Screen Setup (for previewing) */",
+        "    body {",
+        "        background-color: #525659;",
+        "        display: flex;",
+        "        justify-content: center;",
+        "        padding: 2in 0;",
+        "    }",
+        "    ",
+        "    .page {",
+        "        background: white;",
+        "        width: 8.5in;",             # US Letter width
+        "        min-height: 11in;",         # US Letter height
+        "        padding-top: 1in;",         # Top margin
+        "        padding-bottom: 1in;",      # Bottom margin
+        "        padding-left: 1.5in;",      # Left margin (binding)
+        "        padding-right: 1in;",       # Right margin
+        "        box-shadow: 0 0 0.5in rgba(0,0,0,0.5);",
+        "        font-family: 'Courier Prime', 'Courier New', Courier, monospace;",
+        "        font-size: 12pt;",
+        "        line-height: 1.0;",
+        "        position: relative;",
+        "    }",
+        "",
+        "    /* Print Calibration */",
+        "    @media print {",
+        "        @page {",
+        "            size: letter;",         # Force US Letter size
+        "            margin: 0;",            # Remove browser default margins! Crucial.",
+        "        }",
+        "        body {",
+        "            background-color: white;",
+        "            padding: 0;",
+        "            margin: 0;",
+        "            display: block;",
+        "        }",
+        "        .page {",
+        "            box-shadow: none;",
+        "            width: 8.5in;",
+        "            height: 11in;",
+        "            margin: 0;",
+        "            padding-top: 1in;",
+        "            padding-bottom: 1in;",
+        "            padding-left: 1.5in;",
+        "            padding-right: 1in;",
+        "            page-break-after: always;",
+        "        }",
+        "    }",
+        "",
+        "    /* Screenplay Elements Settings */",
+        "    /* Margins align with true page edges (1.5in left padding on .page) */",
+        "    p { margin-bottom: 12pt; } /* Default 1 line space after paragraphs */",
+        "    ",
+        "    .page-number {",
+        "        position: absolute;",
+        "        top: 0.5in;",
+        "        right: 1in;",
+        "        margin: 0;",
+        "    }",
+        "    ",
+        "    .scene-heading {",
+        "        margin-left: 0in; /* Total 1.5in */",
+        "        text-transform: uppercase;",
+        "    }",
+        "    .action {",
+        "        margin-left: 0in; /* Total 1.5in */",
+        "    }",
+        "    .character {",
+        "        margin-left: 2.2in; /* Total 3.7in */",
+        "        width: 1.8in; /* Ends at 5.5in */",
+        "        text-transform: uppercase;",
+        "        margin-bottom: 0; /* Character name touches parenthetical/dialogue */",
+        "        page-break-after: avoid;",
+        "    }",
+        "    .dialogue {",
+        "        margin-left: 1.0in; /* Total 2.5in */",
+        "        width: 3.5in; /* Ends at 6.0in */",
+        "    }",
+        "    .parenthetical {",
+        "        margin-left: 1.6in; /* Total 3.1in */",
+        "        width: 2.5in; /* Ends at 5.6in */",
+        "        margin-bottom: 0; /* Touches dialogue */",
+        "        page-break-after: avoid;",
+        "    }",
+        "    .transition {",
+        "        margin-left: 4.5in; /* Total 6.0in */",
+        "        width: 1.5in; /* Ends at 7.5in */",
+        "        text-transform: uppercase;",
+        "    }",
+        "</style>",
+        "</head>",
+        "<body>",
+        "    <div class=\"page\">",
+        "        <!-- Page Numbers usually hide on page 1, but added for template completeness -->"
+    ]
+
+    html_content.append(f"        <p class=\"scene-heading\">EXT/INT. {location} - {time}</p>")
     
     for action in scene_data.get("action_lines", []):
         terminal_content += f"{Colors.ACTION}{action}{Colors.ENDC}\n\n"
-        doc.add_paragraph(action, style='Action')
+        html_content.append(f"        <p class=\"action\">{action}</p>")
         
     for line in scene_data.get("dialogue", []):
         char = line.get("character")
@@ -115,28 +148,33 @@ def generate_script_from_scene(scene_file_path, output_dir="."):
         text = line.get("text")
         
         terminal_content += f"{Colors.CHARACTER}          {char}{Colors.ENDC}\n"
-        doc.add_paragraph(char, style='Character')
+        html_content.append(f"        <p class=\"character\">{char}</p>")
         
         if paren:
             if not paren.startswith("("): paren = f"({paren})"
             if not paren.endswith(")"): paren = f"{paren})"
             terminal_content += f"{Colors.PARENTHETICAL}        {paren}{Colors.ENDC}\n"
-            doc.add_paragraph(paren, style='Parenthetical')
+            html_content.append(f"        <p class=\"parenthetical\">{paren}</p>")
             
         terminal_content += f"{Colors.DIALOGUE}    {text}{Colors.ENDC}\n\n"
-        doc.add_paragraph(text, style='Dialogue')
-        
-    output_filename = f"scene_{scene_number}.docx"
+        html_content.append(f"        <p class=\"dialogue\">{text}</p>")
+
+    html_content.append("    </div>")
+    html_content.append("</body>")
+    html_content.append("</html>")
+
+    output_filename = f"scene_{scene_number}.html"
     output_path = os.path.join(output_dir, output_filename)
     
-    doc.save(output_path)
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write("\n".join(html_content))
         
     print(f"\n+++ Successfully generated script file: {output_path} +++\n")
     print("--- PREVIEW OF COMPILED SCENE ---")
     print(terminal_content)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Convert scene JSON to script DOCX.")
+    parser = argparse.ArgumentParser(description="Convert scene JSON to script HTML.")
     parser.add_argument("--input", type=str, help="Path to scene JSON file", default="scene_demo.json")
     parser.add_argument("--output_dir", type=str, help="Directory to save the script", default=".")
     
