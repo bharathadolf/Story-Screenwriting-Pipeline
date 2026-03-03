@@ -24,10 +24,10 @@ python main.py init MY_MOVIE
 
 ## Step 1: Planning
 
-Write down your raw ideas, themes, and worldbuilding concepts into a JSON file, e.g., `concept.json`.
+Write down your raw ideas, themes, and worldbuilding concepts into a JSON file, e.g., `examples/concept_input.json`.
 
 ```bash
-python main.py plan MY_MOVIE --input concept.json
+python main.py plan MY_MOVIE --input examples/concept_input.json
 ```
 
 It will process this into a `MY_MOVIE_project_bible.json` located in `01_PLANNING/WIP`.
@@ -62,10 +62,10 @@ python main.py publish --input MY_MOVIE_STORY/02_CHARACTER_DEVELOPMENT/WIP/MY_MO
 
 ## Step 3: Outlining
 
-Now map out your specific scene-by-scene script beats in a JSON file, e.g., `outline.json`.
+Now map out your specific scene-by-scene script beats in a JSON file, e.g., `examples/outline_input.json`.
 
 ```bash
-python main.py outline MY_MOVIE --bible MY_MOVIE_STORY/01_PLANNING/APPROVED/MY_MOVIE_project_bible.json --chars MY_MOVIE_STORY/02_CHARACTER_DEVELOPMENT/APPROVED/MY_MOVIE_character_bible.json --input outline.json
+python main.py outline MY_MOVIE --bible MY_MOVIE_STORY/01_PLANNING/APPROVED/MY_MOVIE_project_bible.json --chars MY_MOVIE_STORY/02_CHARACTER_DEVELOPMENT/APPROVED/MY_MOVIE_character_bible.json --input examples/outline_input.json
 ```
 
 It creates a `MY_MOVIE_master_outline.json` in `03_OUTLINING/WIP`.

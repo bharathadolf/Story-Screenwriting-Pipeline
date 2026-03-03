@@ -53,63 +53,47 @@ def publish(args):
     print(f"Successfully published '{args.input}' to '{args.destination}'. Ready for next stage.")
 
 def print_custom_help():
-    cyan = '\033[96m'
-    green = '\033[92m'
-    yellow = '\033[93m'
-    magenta = '\033[95m'
-    reset = '\033[0m'
+    try:
+        from rich.console import Console
+        from rich.table import Table
+    except ImportError:
+        print("\n[!] The 'rich' library is required for the new CLI help menu.")
+        print("Please install it by running: pip install rich\n")
+        return
 
-    print(f"\n{magenta}================================================================={reset}")
-    print(f"{magenta}             STORY-TO-SCREENWRITING PIPELINE CLI                  {reset}")
-    print(f"{magenta}================================================================={reset}\n")
-    print(f"Usage: {cyan}python main.py <command> [options]{reset}\n")
+    console = Console()
     
-    print(f"{yellow}Available Commands:{reset}")
-    print(f"{green}+-------------+------------------------------------------------------------------------+{reset}")
-    print(f"{green}| Command     | Description & Usage                                                    |{reset}")
-    print(f"{green}+-------------+------------------------------------------------------------------------+{reset}")
+    console.print("\n[bold magenta]" + "="*116)
+    console.print("[bold magenta]" + "                                        STORY-TO-SCREENWRITING PIPELINE CLI                                         ".center(116))
+    console.print("[bold magenta]" + "="*116 + "\n")
+    console.print("Usage: [bold cyan]python main.py <command> [options][/bold cyan]\n")
     
-    # Init
-    print(f"{green}|{reset} {cyan}init{reset}        {green}|{reset} Initialize 5-stage project structure                                   {green}|{reset}")
-    print(f"{green}|{reset}             {green}|{reset} Args: project_name, [--dir]                                            {green}|{reset}")
-    print(f"{green}|{reset}             {green}|{reset} Ex: {yellow}python main.py init MY_MOVIE{reset}                               {green}|{reset}")
-    print(f"{green}+-------------+------------------------------------------------------------------------+{reset}")
-
-    # Plan
-    print(f"{green}|{reset} {cyan}plan{reset}        {green}|{reset} Stage 1: Planning (Lore & Theme)                                       {green}|{reset}")
-    print(f"{green}|{reset}             {green}|{reset} Args: project_name, --input, [--dir]                                   {green}|{reset}")
-    print(f"{green}|{reset}             {green}|{reset} Ex: {yellow}python main.py plan MY_MOVIE --input examples/concept_input.json{reset}            {green}|{reset}")
-    print(f"{green}+-------------+------------------------------------------------------------------------+{reset}")
+    # GENERAL COMMANDS TABLE
+    gen_table = Table(title="General Operations", title_style="bold yellow", title_justify="left", header_style="bold green", show_lines=True)
+    gen_table.add_column("Command", style="bold cyan", no_wrap=True)
+    gen_table.add_column("Description")
+    gen_table.add_column("Example Usage", style="yellow")
     
-    # Character
-    print(f"{green}|{reset} {cyan}character{reset}   {green}|{reset} Stage 2: Character Development                                         {green}|{reset}")
-    print(f"{green}|{reset}             {green}|{reset} Args: project_name, --bible, --input, [--dir]                          {green}|{reset}")
-    print(f"{green}|{reset}             {green}|{reset} Ex: {yellow}python main.py character MY... --bible... --input...{reset}       {green}|{reset}")
-    print(f"{green}+-------------+------------------------------------------------------------------------+{reset}")
+    gen_table.add_row("init", "Initialize 5-stage project structure. Args: project_name, [--dir]", "python main.py init MY_MOVIE")
+    gen_table.add_row("publish", "Publish WIP artifacts to APPROVED folder. Args: --input, --destination", "python main.py publish --input ... --dest ...")
+    
+    console.print(gen_table)
+    console.print()
+    
+    # DEPARTMENT COMMANDS TABLE
+    dept_table = Table(title="Department Operations", title_style="bold yellow", title_justify="left", header_style="bold green", show_lines=True)
+    dept_table.add_column("Command", style="bold cyan", no_wrap=True)
+    dept_table.add_column("Description")
+    dept_table.add_column("Example Usage", style="yellow")
+    
+    dept_table.add_row("plan", "Stage 1: Planning. Extracts Lore & Theme. Args: project_name, --input", "python main.py plan MY_MOVIE --input examples/concept_input.json")
+    dept_table.add_row("character", "Stage 2: Character Dev. Generates bibles. Args: project_name, --bible, --input", "python main.py character MY... --bible... --input...")
+    dept_table.add_row("outline", "Stage 3: Outlining. Maps story beats. Args: project_name, --bible, --chars, --input", "python main.py outline MY... --bible... --chars...")
+    dept_table.add_row("draft", "Stage 4: Drafting. Auto-writes scenes. Args: project_name, --chars, --outline", "python main.py draft MY... --chars... --outline...")
+    dept_table.add_row("refine", "Stage 5: Refining. QA checks. Args: project_name, --drafts, --chars", "python main.py refine MY... --drafts... --chars...")
 
-    # Outline
-    print(f"{green}|{reset} {cyan}outline{reset}     {green}|{reset} Stage 3: Outlining (Mapping the Story)                                 {green}|{reset}")
-    print(f"{green}|{reset}             {green}|{reset} Args: project_name, --bible, --chars, --input, [--dir]                 {green}|{reset}")
-    print(f"{green}|{reset}             {green}|{reset} Ex: {yellow}python main.py outline MY... --bible... --chars...{reset}         {green}|{reset}")
-    print(f"{green}+-------------+------------------------------------------------------------------------+{reset}")
-
-    # Draft
-    print(f"{green}|{reset} {cyan}draft{reset}       {green}|{reset} Stage 4: Drafting (Writing the Story)                                  {green}|{reset}")
-    print(f"{green}|{reset}             {green}|{reset} Args: project_name, --chars, --outline, [--dir]                        {green}|{reset}")
-    print(f"{green}|{reset}             {green}|{reset} Ex: {yellow}python main.py draft MY... --chars... --outline...{reset}         {green}|{reset}")
-    print(f"{green}+-------------+------------------------------------------------------------------------+{reset}")
-
-    # Refine
-    print(f"{green}|{reset} {cyan}refine{reset}      {green}|{reset} Stage 5: Refining/Editing (Continual Revision)                         {green}|{reset}")
-    print(f"{green}|{reset}             {green}|{reset} Args: project_name, --drafts, --chars, [--dir]                         {green}|{reset}")
-    print(f"{green}|{reset}             {green}|{reset} Ex: {yellow}python main.py refine MY... --drafts... --chars...{reset}         {green}|{reset}")
-    print(f"{green}+-------------+------------------------------------------------------------------------+{reset}")
-
-    # Publish
-    print(f"{green}|{reset} {cyan}publish{reset}     {green}|{reset} Publish a WIP artifact to an APPROVED folder                           {green}|{reset}")
-    print(f"{green}|{reset}             {green}|{reset} Args: --input, --destination                                           {green}|{reset}")
-    print(f"{green}|{reset}             {green}|{reset} Ex: {yellow}python main.py publish --input ...{reset}   {green}|{reset}")
-    print(f"{green}+-------------+------------------------------------------------------------------------+{reset}\n")
+    console.print(dept_table)
+    console.print()
 
 if __name__ == "__main__":
     if "-h" in sys.argv or "--help" in sys.argv:
