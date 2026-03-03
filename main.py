@@ -10,7 +10,7 @@ from agents.character_agent import run_character_dev
 from agents.outlining_agent import run_outlining
 from agents.drafting_agent import run_drafting
 from agents.refining_agent import run_refining
-from create_story_pipeline import create_structure
+from core.create_story_pipeline import create_structure
 
 def init_project(args):
     print(f"Initializing project: {args.project_name}")
@@ -62,7 +62,7 @@ def print_custom_help():
     print(f"\n{magenta}================================================================={reset}")
     print(f"{magenta}             STORY-TO-SCREENWRITING PIPELINE CLI                  {reset}")
     print(f"{magenta}================================================================={reset}\n")
-    print(f"Usage: {cyan}python run_pipeline.py <command> [options]{reset}\n")
+    print(f"Usage: {cyan}python main.py <command> [options]{reset}\n")
     
     print(f"{yellow}Available Commands:{reset}")
     print(f"{green}+-------------+------------------------------------------------------------------------+{reset}")
@@ -72,43 +72,43 @@ def print_custom_help():
     # Init
     print(f"{green}|{reset} {cyan}init{reset}        {green}|{reset} Initialize 5-stage project structure                                   {green}|{reset}")
     print(f"{green}|{reset}             {green}|{reset} Args: project_name, [--dir]                                            {green}|{reset}")
-    print(f"{green}|{reset}             {green}|{reset} Ex: {yellow}python run_pipeline.py init MY_MOVIE{reset}                               {green}|{reset}")
+    print(f"{green}|{reset}             {green}|{reset} Ex: {yellow}python main.py init MY_MOVIE{reset}                               {green}|{reset}")
     print(f"{green}+-------------+------------------------------------------------------------------------+{reset}")
 
     # Plan
     print(f"{green}|{reset} {cyan}plan{reset}        {green}|{reset} Stage 1: Planning (Lore & Theme)                                       {green}|{reset}")
     print(f"{green}|{reset}             {green}|{reset} Args: project_name, --input, [--dir]                                   {green}|{reset}")
-    print(f"{green}|{reset}             {green}|{reset} Ex: {yellow}python run_pipeline.py plan MY_MOVIE --input ideas.json{reset}            {green}|{reset}")
+    print(f"{green}|{reset}             {green}|{reset} Ex: {yellow}python main.py plan MY_MOVIE --input examples/concept_input.json{reset}            {green}|{reset}")
     print(f"{green}+-------------+------------------------------------------------------------------------+{reset}")
     
     # Character
     print(f"{green}|{reset} {cyan}character{reset}   {green}|{reset} Stage 2: Character Development                                         {green}|{reset}")
     print(f"{green}|{reset}             {green}|{reset} Args: project_name, --bible, --input, [--dir]                          {green}|{reset}")
-    print(f"{green}|{reset}             {green}|{reset} Ex: {yellow}python run_pipeline.py character MY... --bible... --input...{reset}       {green}|{reset}")
+    print(f"{green}|{reset}             {green}|{reset} Ex: {yellow}python main.py character MY... --bible... --input...{reset}       {green}|{reset}")
     print(f"{green}+-------------+------------------------------------------------------------------------+{reset}")
 
     # Outline
     print(f"{green}|{reset} {cyan}outline{reset}     {green}|{reset} Stage 3: Outlining (Mapping the Story)                                 {green}|{reset}")
     print(f"{green}|{reset}             {green}|{reset} Args: project_name, --bible, --chars, --input, [--dir]                 {green}|{reset}")
-    print(f"{green}|{reset}             {green}|{reset} Ex: {yellow}python run_pipeline.py outline MY... --bible... --chars...{reset}         {green}|{reset}")
+    print(f"{green}|{reset}             {green}|{reset} Ex: {yellow}python main.py outline MY... --bible... --chars...{reset}         {green}|{reset}")
     print(f"{green}+-------------+------------------------------------------------------------------------+{reset}")
 
     # Draft
     print(f"{green}|{reset} {cyan}draft{reset}       {green}|{reset} Stage 4: Drafting (Writing the Story)                                  {green}|{reset}")
     print(f"{green}|{reset}             {green}|{reset} Args: project_name, --chars, --outline, [--dir]                        {green}|{reset}")
-    print(f"{green}|{reset}             {green}|{reset} Ex: {yellow}python run_pipeline.py draft MY... --chars... --outline...{reset}         {green}|{reset}")
+    print(f"{green}|{reset}             {green}|{reset} Ex: {yellow}python main.py draft MY... --chars... --outline...{reset}         {green}|{reset}")
     print(f"{green}+-------------+------------------------------------------------------------------------+{reset}")
 
     # Refine
     print(f"{green}|{reset} {cyan}refine{reset}      {green}|{reset} Stage 5: Refining/Editing (Continual Revision)                         {green}|{reset}")
     print(f"{green}|{reset}             {green}|{reset} Args: project_name, --drafts, --chars, [--dir]                         {green}|{reset}")
-    print(f"{green}|{reset}             {green}|{reset} Ex: {yellow}python run_pipeline.py refine MY... --drafts... --chars...{reset}         {green}|{reset}")
+    print(f"{green}|{reset}             {green}|{reset} Ex: {yellow}python main.py refine MY... --drafts... --chars...{reset}         {green}|{reset}")
     print(f"{green}+-------------+------------------------------------------------------------------------+{reset}")
 
     # Publish
     print(f"{green}|{reset} {cyan}publish{reset}     {green}|{reset} Publish a WIP artifact to an APPROVED folder                           {green}|{reset}")
     print(f"{green}|{reset}             {green}|{reset} Args: --input, --destination                                           {green}|{reset}")
-    print(f"{green}|{reset}             {green}|{reset} Ex: {yellow}python run_pipeline.py publish --input WIP.json --dest APPV.json{reset}   {green}|{reset}")
+    print(f"{green}|{reset}             {green}|{reset} Ex: {yellow}python main.py publish --input ...{reset}   {green}|{reset}")
     print(f"{green}+-------------+------------------------------------------------------------------------+{reset}\n")
 
 if __name__ == "__main__":

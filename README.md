@@ -17,7 +17,7 @@ This guide explains how to use the Agentic Story Pipeline from start to finish. 
 First, run the initialization command to generate the 5-stage scaffolding (`WIP` and `APPROVED` folders).
 
 ```bash
-python run_pipeline.py init MY_MOVIE
+python main.py init MY_MOVIE
 ```
 
 ---
@@ -27,7 +27,7 @@ python run_pipeline.py init MY_MOVIE
 Write down your raw ideas, themes, and worldbuilding concepts into a JSON file, e.g., `concept.json`.
 
 ```bash
-python run_pipeline.py plan MY_MOVIE --input concept.json
+python main.py plan MY_MOVIE --input concept.json
 ```
 
 It will process this into a `MY_MOVIE_project_bible.json` located in `01_PLANNING/WIP`.
@@ -36,7 +36,7 @@ It will process this into a `MY_MOVIE_project_bible.json` located in `01_PLANNIN
 Once you check this WIP file and approve it, "publish" it to the approved folder so Stage 2 can access it:
 
 ```bash
-python run_pipeline.py publish --input MY_MOVIE_STORY/01_PLANNING/WIP/MY_MOVIE_project_bible.json --destination MY_MOVIE_STORY/01_PLANNING/APPROVED/MY_MOVIE_project_bible.json
+python main.py publish --input MY_MOVIE_STORY/01_PLANNING/WIP/MY_MOVIE_project_bible.json --destination MY_MOVIE_STORY/01_PLANNING/APPROVED/MY_MOVIE_project_bible.json
 ```
 
 ---
@@ -46,7 +46,7 @@ python run_pipeline.py publish --input MY_MOVIE_STORY/01_PLANNING/WIP/MY_MOVIE_p
 With your approved concept, write down your raw character profiles in a JSON file, e.g., `characters.json`.
 
 ```bash
-python run_pipeline.py character MY_MOVIE --bible MY_MOVIE_STORY/01_PLANNING/APPROVED/MY_MOVIE_project_bible.json --input characters.json
+python main.py character MY_MOVIE --bible MY_MOVIE_STORY/01_PLANNING/APPROVED/MY_MOVIE_project_bible.json --input characters.json
 ```
 
 It will output the formatted `MY_MOVIE_character_bible.json` in `02_CHARACTER_DEVELOPMENT/WIP`.
@@ -55,7 +55,7 @@ It will output the formatted `MY_MOVIE_character_bible.json` in `02_CHARACTER_DE
 Ensure the character flaws and arcs look correct.
 
 ```bash
-python run_pipeline.py publish --input MY_MOVIE_STORY/02_CHARACTER_DEVELOPMENT/WIP/MY_MOVIE_character_bible.json --destination MY_MOVIE_STORY/02_CHARACTER_DEVELOPMENT/APPROVED/MY_MOVIE_character_bible.json
+python main.py publish --input MY_MOVIE_STORY/02_CHARACTER_DEVELOPMENT/WIP/MY_MOVIE_character_bible.json --destination MY_MOVIE_STORY/02_CHARACTER_DEVELOPMENT/APPROVED/MY_MOVIE_character_bible.json
 ```
 
 ---
@@ -65,7 +65,7 @@ python run_pipeline.py publish --input MY_MOVIE_STORY/02_CHARACTER_DEVELOPMENT/W
 Now map out your specific scene-by-scene script beats in a JSON file, e.g., `outline.json`.
 
 ```bash
-python run_pipeline.py outline MY_MOVIE --bible MY_MOVIE_STORY/01_PLANNING/APPROVED/MY_MOVIE_project_bible.json --chars MY_MOVIE_STORY/02_CHARACTER_DEVELOPMENT/APPROVED/MY_MOVIE_character_bible.json --input outline.json
+python main.py outline MY_MOVIE --bible MY_MOVIE_STORY/01_PLANNING/APPROVED/MY_MOVIE_project_bible.json --chars MY_MOVIE_STORY/02_CHARACTER_DEVELOPMENT/APPROVED/MY_MOVIE_character_bible.json --input outline.json
 ```
 
 It creates a `MY_MOVIE_master_outline.json` in `03_OUTLINING/WIP`.
@@ -73,7 +73,7 @@ It creates a `MY_MOVIE_master_outline.json` in `03_OUTLINING/WIP`.
 **Review and Publish:**
 
 ```bash
-python run_pipeline.py publish --input MY_MOVIE_STORY/03_OUTLINING/WIP/MY_MOVIE_master_outline.json --destination MY_MOVIE_STORY/03_OUTLINING/APPROVED/MY_MOVIE_master_outline.json
+python main.py publish --input MY_MOVIE_STORY/03_OUTLINING/WIP/MY_MOVIE_master_outline.json --destination MY_MOVIE_STORY/03_OUTLINING/APPROVED/MY_MOVIE_master_outline.json
 ```
 
 ---
@@ -83,7 +83,7 @@ python run_pipeline.py publish --input MY_MOVIE_STORY/03_OUTLINING/WIP/MY_MOVIE_
 You don't need any new input files for this! The Drafting Agent takes your approved characters and approved outline and writes the scenes for you.
 
 ```bash
-python run_pipeline.py draft MY_MOVIE --chars MY_MOVIE_STORY/02_CHARACTER_DEVELOPMENT/APPROVED/MY_MOVIE_character_bible.json --outline MY_MOVIE_STORY/03_OUTLINING/APPROVED/MY_MOVIE_master_outline.json
+python main.py draft MY_MOVIE --chars MY_MOVIE_STORY/02_CHARACTER_DEVELOPMENT/APPROVED/MY_MOVIE_character_bible.json --outline MY_MOVIE_STORY/03_OUTLINING/APPROVED/MY_MOVIE_master_outline.json
 ```
 
 The drafted HTML script files will populate in the `04_DRAFTING/WIP` folder.
@@ -92,7 +92,7 @@ The drafted HTML script files will populate in the `04_DRAFTING/WIP` folder.
 Publish the _entire folder_:
 
 ```bash
-python run_pipeline.py publish --input MY_MOVIE_STORY/04_DRAFTING/WIP --destination MY_MOVIE_STORY/04_DRAFTING/APPROVED
+python main.py publish --input MY_MOVIE_STORY/04_DRAFTING/WIP --destination MY_MOVIE_STORY/04_DRAFTING/APPROVED
 ```
 
 ---
@@ -102,7 +102,7 @@ python run_pipeline.py publish --input MY_MOVIE_STORY/04_DRAFTING/WIP --destinat
 Run the continuity checker and syntax linters to make sure everything matches.
 
 ```bash
-python run_pipeline.py refine MY_MOVIE --drafts MY_MOVIE_STORY/04_DRAFTING/APPROVED --chars MY_MOVIE_STORY/02_CHARACTER_DEVELOPMENT/APPROVED/MY_MOVIE_character_bible.json
+python main.py refine MY_MOVIE --drafts MY_MOVIE_STORY/04_DRAFTING/APPROVED --chars MY_MOVIE_STORY/02_CHARACTER_DEVELOPMENT/APPROVED/MY_MOVIE_character_bible.json
 ```
 
 It will generate a `MY_MOVIE_linter_errors.json` report in `05_REFINING/WIP`. If it reports `0 Linter Errors`, your script is completely production-ready.
