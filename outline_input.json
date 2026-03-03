@@ -1,0 +1,15 @@
+{
+    "project": "TEST",
+    "genre": "Sci-Fi",
+    "scenes": [
+        {
+            "scene_number": 1,
+            "location": "SECTOR 4",
+            "time": "NIGHT",
+            "characters_present": ["REX"],
+            "goal": "Establish Rex's character in the dark location.",
+            "action_beats": ["Rex walks into the room.", "He checks his computer."],
+            "dialogue_beats": [{"character": "REX", "text": "Another day. Another grid.", "parenthetical": "Sighs"}]
+        }
+    ]
+}

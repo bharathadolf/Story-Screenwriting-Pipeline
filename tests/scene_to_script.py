@@ -175,7 +175,7 @@ def generate_script_from_scene(scene_file_path, output_dir="."):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Convert scene JSON to script HTML.")
-    parser.add_argument("--input", type=str, help="Path to scene JSON file", default="scene_demo.json")
+    parser.add_argument("--input", type=str, required=True, help="Path to scene JSON file (required)")
     parser.add_argument("--output_dir", type=str, help="Directory to save the script", default=".")
     
     args = parser.parse_args()
@@ -188,4 +188,4 @@ if __name__ == "__main__":
     if os.path.exists(input_path):
         generate_script_from_scene(input_path, output_dir)
     else:
-        print(f"Error: Demo scene file not found at {input_path}")
+        print(f"Error: Scene file not found at {input_path}")

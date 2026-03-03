@@ -1,0 +1,18 @@
+{
+    "characters": [
+        {
+            "name": "REX",
+            "role": "Protagonist",
+            "traits": ["Cynical", "Resourceful"],
+            "voice": "Short, punchy sentences. Rarely uses contractions."
+        }
+    ],
+    "locations": [
+        {
+            "name": "SECTOR 4",
+            "type": "INT",
+            "description": "Dark, neon-lit. Always raining outside.",
+            "rules": "No organic life allowed."
+        }
+    ]
+}
