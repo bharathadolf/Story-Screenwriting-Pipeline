@@ -95,6 +95,49 @@ def print_custom_help():
     console.print(dept_table)
     console.print()
 
+    console.print("[bold yellow]Department Workflows:[/bold yellow]\n")
+
+    # STAGE 1: PLANNING
+    t1 = Table(title="1. Planning Department (The Showrunner)", title_style="bold cyan", title_justify="left", show_lines=True)
+    t1.add_column("Input Requirement", style="yellow")
+    t1.add_column("Agent Action", style="white")
+    t1.add_column("Output Generated", style="green")
+    t1.add_row("--input (concept_input.json)", "Gemini autonomously expands premise into themes and world lore. Interactive terminal feedback loop.", "project_bible.json")
+    console.print(t1)
+
+    # STAGE 2: CHARACTER
+    t2 = Table(title="2. Character Department (The Dramaturg)", title_style="bold cyan", title_justify="left", show_lines=True)
+    t2.add_column("Input Requirement", style="yellow")
+    t2.add_column("Agent Action", style="white")
+    t2.add_column("Output Generated", style="green")
+    t2.add_row("--bible (project_bible.json)\n--input (characters.json)", "Generates deep character arcs, flaws, and relationship dynamics based on the project lore.", "character_bible.json")
+    console.print(t2)
+
+    # STAGE 3: OUTLINING
+    t3 = Table(title="3. Outlining Department (The Mapper)", title_style="bold cyan", title_justify="left", show_lines=True)
+    t3.add_column("Input Requirement", style="yellow")
+    t3.add_column("Agent Action", style="white")
+    t3.add_column("Output Generated", style="green")
+    t3.add_row("--bible (project_bible.json)\n--chars (character_bible.json)\n--input (outline_input.json)", "Maps out scene-by-scene script beats, ensuring pacing aligns with character arcs and theme.", "master_outline.json")
+    console.print(t3)
+
+    # STAGE 4: DRAFTING
+    t4 = Table(title="4. Drafting Department (The Screenwriter)", title_style="bold cyan", title_justify="left", show_lines=True)
+    t4.add_column("Input Requirement", style="yellow")
+    t4.add_column("Agent Action", style="white")
+    t4.add_column("Output Generated", style="green")
+    t4.add_row("--chars (character_bible.json)\n--outline (master_outline.json)", "Autonomously writes screenplay scenes (action, dialogue) following standard script format.", "HTML/JSON Scene Drafts")
+    console.print(t4)
+    
+    # STAGE 5: REFINING
+    t5 = Table(title="5. Refining Department (The Continuity Checker)", title_style="bold cyan", title_justify="left", show_lines=True)
+    t5.add_column("Input Requirement", style="yellow")
+    t5.add_column("Agent Action", style="white")
+    t5.add_column("Output Generated", style="green")
+    t5.add_row("--chars (character_bible.json)\n--drafts (Drafts Folder)", "Scans drafts for character voice continuity and plot holes.", "linter_errors.json")
+    console.print(t5)
+    console.print()
+
 if __name__ == "__main__":
     if "-h" in sys.argv or "--help" in sys.argv:
         print_custom_help()
