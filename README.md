@@ -22,18 +22,28 @@ python main.py init MY_MOVIE
 
 ---
 
-## Step 1: Planning
+## Step 1: Planning (Agentic Loop)
 
-Write down your raw ideas, themes, and worldbuilding concepts into a JSON file, e.g., `examples/concept_input.json`.
+The planning stage is a fully autonomous **Agentic Loop** powered by Gemini 1.5 Pro. The Showrunner Agent will read your raw concept, creatively brainstorm the themes and lore, write the Project Bible, and then pause to ask for your feedback interactively in the terminal!
+
+**Prerequisite:** Ensure you have your Gemini API key set:
+
+- **Windows CMD:** `set GEMINI_API_KEY=your_actual_key`
+- **Windows PowerShell:** `$env:GEMINI_API_KEY="your_actual_key"`
+- **Mac/Linux:** `export GEMINI_API_KEY="your_actual_key"`
+
+Write down your raw ideas into a JSON file, e.g., `examples/concept_input.json`, then spawn the agent:
 
 ```bash
 python main.py plan MY_MOVIE --input examples/concept_input.json
 ```
 
-It will process this into a `MY_MOVIE_project_bible.json` located in `01_PLANNING/WIP`.
+The Agent will spawn, think, and draft the `MY_MOVIE_project_bible.json` in `01_PLANNING/WIP`.
+When it pauses and asks for human feedback, you can type instructions to redirect the story (e.g., _"Make the villain's motivations more sympathetic"_), and the agent will dynamically rewrite the lore file.
+When you are happy with the generated Bible, type **"Approve"** in the terminal to end the loop.
 
 **Review and Publish:**
-Once you check this WIP file and approve it, "publish" it to the approved folder so Stage 2 can access it:
+Once approved and finalized, "publish" it to the approved folder so Stage 2 can access it:
 
 ```bash
 python main.py publish --input MY_MOVIE_STORY/01_PLANNING/WIP/MY_MOVIE_project_bible.json --destination MY_MOVIE_STORY/01_PLANNING/APPROVED/MY_MOVIE_project_bible.json
